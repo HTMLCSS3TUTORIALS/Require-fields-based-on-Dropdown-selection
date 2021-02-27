@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Field Required if Certain Dropdown is value is selected using Jquery</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"  crossorigin="anonymous">
+<style>
+html, body {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+body, div, h1, form, input, p {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+h1 {
+    padding: 10px 0;
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+}
+p {
+    font-size: 12px;
+}
+hr {
+    color: #a9a9a9;
+    opacity: 0.3;
+}
+.main-block {
+    width: 400px;
+    min-height: 460px;
+    padding: 10px 0;
+    margin: auto;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+    background: #ebebeb;
+}
+form {
+    margin: 0 30px;
+}
+.account-type, .gender {
+    margin: 15px 0;
+    text-align: center;
+}
+input[type=text], input[type=date] {
+    width: 97%;
+    height: 36px;
+    margin: 13px 0 0 -5px;
+    padding-left: 10px;
+    border-radius: 5px 5px 5px 5px;
+    border: solid 1px #cbc9c9;
+    box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    background: #fff;
+}
+.dropdown {
+    width: 100%;
+    height: 36px;
+    margin: 13px 0 0 -5px;
+    padding-left: 10px;
+    border-radius: 5px 5px 5px 5px;
+    border: solid 1px #cbc9c9;
+    box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+}
+.btn-block {
+    margin-top: 10px;
+    text-align: center;
+}
+button {
+    width: 100%;
+    padding: 10px 0;
+    margin: 10px auto;
+    border-radius: 5px;
+    border: none;
+    background: #1c87c9;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+button:hover {
+    background: #26a9e0;
+}
+	.show{
+		display: block;
+	}
+	.hidden{
+		display: none;
+	}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="main-block">
+  <h1>On Dropdown Value Selection Text Fields is Mandatory</h1>
+  <form action="#" method="post">
+    <hr>
+    <div class="account-type">
+      <select id="identityProof" name="identityProof" class="identityProof dropdown">
+		  <option value="" selected disabled>Identity Proof</option>
+        <option value="Passport" >Passport</option>
+        <option value="PAN">PAN Card</option>
+        <option value="Aadhar">Aadhar Card</option>
+      </select>
+    </div>
+    <hr>
+    <div class="show" id="passport">
+      <input type="text" name="passportNumber" id="passportNumber" placeholder="Passport Number"/>
+      <input type="date" name="validityDate" id="validityDate"/>
+    </div>
+    <div class="hidden" id="panCR">
+      <input type="text" name="panCard" id="panCard" placeholder="PAN Card Number"/>
+    </div>
+    <div class="hidden" id="aadhar">
+      <input type="text" name="aadharNumber" id="aadharNumber" placeholder="Aadhar Number"/>
+    </div>
+    <hr>
+    <div class="btn-block">
+      <button type="submit" href="/">Submit</button>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+	$('.identityProof').change(function() {
+		var identityProof = $(this).val();
+		if(identityProof =="Passport"){
+		$('#passport').removeClass("hidden");
+		$('#passport').addClass("show");
+		$('#panCR').addClass("hidden");
+		$('#panCR').removeClass("show");
+		$('#aadhar').removeClass("show");
+		$('#aadhar').addClass("hidden");
+		$("#passportNumber").prop('required',true);
+		$("#validityDate").prop('required',true);
+		$("#panCard").prop('required',false);
+		$("#aadharNumber").prop('required',false);
+		}
+		else if(identityProof =="PAN") {	
+		$('#passport').removeClass("show");
+		$('#passport').addClass("hidden");
+		$('#panCR').removeClass("hidden");
+		$('#panCR').addClass("show");
+		$('#aadhar').removeClass("show");
+		$('#aadhar').addClass("hidden");
+		$("#panCard").prop('required',true);
+		$("#passportNumber").prop('required',false);
+		$("#validityDate").prop('required',false);
+		$("#aadharNumber").prop('required',false);
+		}
+		else if(identityProof =="Aadhar") {	
+		$('#aadhar').removeClass("hidden");
+		$('#aadhar').addClass("show");
+		$('#panCR').removeClass("show");
+		$('#panCR').addClass("hidden");
+		$('#passport').removeClass("show");
+		$('#passport').addClass("hidden");
+		$("#aadharNumber").prop('required',true);
+		$("#passportNumber").prop('required',false);
+		$("#validityDate").prop('required',false);
+		$("#panCard").prop('required',false);
+		} else {
+		$("#aadharNumber").prop('required',false);
+		$("#passportNumber").prop('required',false);
+		$("#validityDate").prop('required',false);
+		$("#panCard").prop('required',false);	
+		}
+		//console.log(responseId);	
+	});
+	</script>
+</body>
+</html>
